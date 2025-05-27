@@ -1,0 +1,236 @@
+# Prompt Pilot - LinkedIn AI Comment Generator Chrome Extension - PRD
+
+## Overview
+Prompt Pilot is a Chrome extension that enhances LinkedIn user engagement by providing AI-powered comment suggestions. The extension adds a discrete AI button to each LinkedIn post, allowing users to generate contextually relevant comments with a single click. The generated comments are automatically copied to the clipboard and inserted into the LinkedIn comment box, streamlining the commenting process and improving user engagement quality.
+
+**Problem Statement:** LinkedIn users often struggle to craft meaningful, engaging comments on posts, leading to generic responses or avoiding commenting altogether. This reduces engagement and networking opportunities.
+
+**Solution:** An intelligent Chrome extension that analyzes LinkedIn post content and generates personalized, contextually appropriate comments using AI, making engagement effortless and more meaningful.
+
+**Target Users:** LinkedIn professionals, content creators, sales professionals, and anyone looking to increase their LinkedIn engagement efficiently.
+
+## Core Features
+
+### 1. AI Button Injection
+- **What it does:** Dynamically injects a styled AI button next to each LinkedIn post
+- **Why it's important:** Provides easy access to AI comment generation without disrupting LinkedIn's native UI
+- **How it works:** Content script monitors DOM changes, identifies post elements, and adds buttons with consistent styling
+
+### 2. Post Content Extraction
+- **What it does:** Extracts the complete text content from LinkedIn posts when the AI button is clicked
+- **Why it's important:** Provides context for AI to generate relevant comments
+- **How it works:** DOM parsing to identify and extract post text, handling various LinkedIn post formats (text, images, videos, polls)
+
+### 3. AI Comment Generation
+- **What it does:** Sends post content to external API and receives AI-generated comment suggestions
+- **Why it's important:** Core functionality that provides value through intelligent comment creation
+- **How it works:** HTTP POST request to specified webhook endpoint with post content, handles API responses and errors
+
+### 4. Clipboard Integration
+- **What it does:** Automatically copies generated comments to user's clipboard
+- **Why it's important:** Allows users to paste comments elsewhere or have backup access
+- **How it works:** Uses Chrome's clipboard API with proper permissions
+
+### 5. Auto-insertion into Comment Box
+- **What it does:** Automatically inserts generated comment into LinkedIn's comment input field
+- **Why it's important:** Streamlines the commenting process, reducing friction
+- **How it works:** DOM manipulation to find and populate comment textarea elements
+
+### 6. Visual Feedback System
+- **What it does:** Provides loading states, success/error indicators, and user feedback
+- **Why it's important:** Keeps users informed about operation status and builds trust
+- **How it works:** Dynamic button state changes, toast notifications, and visual cues
+
+## User Experience
+
+### User Personas
+1. **Professional Networker:** Wants to engage meaningfully but lacks time to craft thoughtful comments
+2. **Content Creator:** Needs to maintain high engagement levels across multiple posts
+3. **Sales Professional:** Uses LinkedIn for lead generation and relationship building
+4. **Job Seeker:** Wants to increase visibility through strategic commenting
+
+### Key User Flows
+
+#### Primary Flow: Generate and Use AI Comment
+1. User browses LinkedIn feed
+2. User sees AI button on posts of interest
+3. User clicks AI button
+4. Extension extracts post content
+5. Loading indicator appears
+6. API call generates comment
+7. Comment appears in LinkedIn comment box
+8. Comment is copied to clipboard
+9. User can edit, submit, or regenerate
+
+#### Secondary Flow: Error Handling
+1. User clicks AI button
+2. API call fails or times out
+3. Error message displays
+4. User can retry or manually comment
+
+### UI/UX Considerations
+- **Non-intrusive Design:** Button blends with LinkedIn's aesthetic
+- **Accessibility:** Proper ARIA labels and keyboard navigation
+- **Responsive:** Works across different screen sizes
+- **Performance:** Minimal impact on LinkedIn's loading speed
+- **Privacy:** Clear indication of AI usage and data handling
+
+## Technical Architecture
+
+### System Components
+1. **Content Script:** Handles DOM manipulation and user interactions
+2. **Background Script:** Manages API calls and cross-origin requests
+3. **Popup Interface:** Settings and configuration panel
+4. **Storage System:** User preferences and API configuration
+
+### Data Models
+```javascript
+// Post Data Structure
+{
+  postId: string,
+  content: string,
+  author: string,
+  timestamp: Date,
+  postType: 'text' | 'image' | 'video' | 'poll'
+}
+
+// API Request Structure
+{
+  post: string // Complete post content
+}
+
+// API Response Structure
+{
+  output: string // Generated comment
+}
+
+// User Settings
+{
+  apiEndpoint: string,
+  autoInsert: boolean,
+  copyToClipboard: boolean,
+  buttonStyle: 'minimal' | 'prominent'
+}
+```
+
+### APIs and Integrations
+- **External AI API:** `https://aemal.app.n8n.cloud/webhook-test/99dd3a64-0ff8-45c2-a807-ff4845274bdd`
+- **Chrome Extension APIs:** storage, activeTab, clipboardWrite
+- **LinkedIn DOM:** Post identification and comment box manipulation
+
+### Infrastructure Requirements
+- Chrome Web Store hosting
+- Manifest V3 compliance
+- Content Security Policy configuration
+- Cross-origin request handling
+
+## Development Roadmap
+
+### Phase 1: MVP Foundation
+**Scope:** Basic functionality with manual button injection
+- Chrome extension boilerplate setup
+- Manifest V3 configuration
+- Basic content script for button injection
+- Simple post content extraction
+- API integration with hardcoded endpoint
+- Basic comment insertion functionality
+
+### Phase 2: Enhanced User Experience
+**Scope:** Improved UI/UX and error handling
+- Dynamic button styling and positioning
+- Loading states and visual feedback
+- Error handling and retry mechanisms
+- Clipboard integration
+- Basic settings popup
+
+### Phase 3: Advanced Features
+**Scope:** Customization and optimization
+- User-configurable API endpoints
+- Multiple comment generation options
+- Comment editing interface
+- Performance optimizations
+- Analytics and usage tracking
+
+### Phase 4: Enterprise Features
+**Scope:** Advanced functionality for power users
+- Comment templates and personalization
+- Bulk comment generation
+- Integration with CRM systems
+- Advanced analytics dashboard
+- Team collaboration features
+
+## Logical Dependency Chain
+
+### Foundation Layer (Build First)
+1. **Extension Infrastructure:** Manifest, basic file structure, permissions
+2. **Content Script Base:** DOM monitoring and basic injection capabilities
+3. **API Communication:** Background script for external API calls
+
+### Core Functionality Layer
+4. **Post Detection:** Reliable identification of LinkedIn post elements
+5. **Content Extraction:** Robust text extraction from various post types
+6. **Button Injection:** Consistent button placement and styling
+7. **API Integration:** Complete request/response handling
+
+### User Interface Layer
+8. **Comment Insertion:** DOM manipulation for comment box population
+9. **Clipboard Integration:** Copy functionality with proper permissions
+10. **Visual Feedback:** Loading states and user notifications
+
+### Enhancement Layer
+11. **Error Handling:** Comprehensive error management and recovery
+12. **Settings Interface:** User configuration and preferences
+13. **Performance Optimization:** Efficient DOM monitoring and API caching
+
+## Risks and Mitigations
+
+### Technical Challenges
+- **LinkedIn DOM Changes:** LinkedIn frequently updates their interface
+  - *Mitigation:* Flexible selectors, regular testing, fallback mechanisms
+- **Content Security Policy:** Restrictions on external API calls
+  - *Mitigation:* Background script handling, proper manifest permissions
+- **Rate Limiting:** API endpoint may have usage limits
+  - *Mitigation:* Request throttling, user feedback, fallback options
+
+### MVP Considerations
+- **Scope Creep:** Feature complexity can delay initial release
+  - *Mitigation:* Focus on core functionality first, iterative development
+- **LinkedIn Compliance:** Extension must not violate LinkedIn's terms
+  - *Mitigation:* Review LinkedIn's developer policies, non-intrusive design
+- **User Adoption:** Users may be hesitant to use AI-generated content
+  - *Mitigation:* Clear value proposition, editing capabilities, transparency
+
+### Resource Constraints
+- **API Costs:** External AI service may have usage fees
+  - *Mitigation:* Usage monitoring, user limits, alternative providers
+- **Maintenance:** LinkedIn updates require ongoing maintenance
+  - *Mitigation:* Automated testing, community feedback, update schedule
+
+## Appendix
+
+### Technical Specifications
+- **Chrome Extension Manifest:** Version 3
+- **Minimum Chrome Version:** 88+
+- **API Endpoint:** RESTful HTTP POST
+- **Response Format:** JSON
+- **Storage:** Chrome extension local storage
+- **Permissions:** activeTab, storage, clipboardWrite
+
+### Research Findings
+- LinkedIn uses dynamic class names that change frequently
+- Comment boxes are loaded asynchronously
+- LinkedIn's CSP restricts inline scripts
+- Users prefer non-intrusive UI additions
+- AI-generated content performs better with human editing
+
+### Success Metrics
+- **User Engagement:** Click-through rate on AI buttons
+- **Comment Quality:** User retention and comment editing frequency
+- **Performance:** Page load impact and API response times
+- **Adoption:** Daily active users and feature usage statistics
+
+### Future Considerations
+- **Multi-platform Support:** Extension for other social networks
+- **Mobile Integration:** Mobile browser extension support
+- **AI Model Training:** Custom model training on user feedback
+- **Enterprise Integration:** API for business social media management tools 
