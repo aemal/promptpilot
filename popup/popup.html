@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Pilot Settings</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <header class="popup-header">
+            <div class="logo">
+                <img src="../icons/icon32.png" alt="Prompt Pilot" class="logo-icon">
+                <h1>Prompt Pilot</h1>
+            </div>
+            <p class="tagline">AI-powered LinkedIn comments</p>
+        </header>
+
+        <main class="popup-content">
+            <section class="settings-section">
+                <h2>Settings</h2>
+                
+                <div class="setting-item">
+                    <label for="api-endpoint">API Endpoint:</label>
+                    <input 
+                        type="url" 
+                        id="api-endpoint" 
+                        placeholder="https://your-api-endpoint.com"
+                        value="https://aemal.app.n8n.cloud/webhook-test/99dd3a64-0ff8-45c2-a807-ff4845274bdd"
+                    >
+                </div>
+
+                <div class="setting-item">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="auto-insert" checked>
+                        <span class="checkmark"></span>
+                        Auto-insert comments
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="copy-clipboard" checked>
+                        <span class="checkmark"></span>
+                        Copy to clipboard
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <label for="button-style">Button Style:</label>
+                    <select id="button-style">
+                        <option value="minimal">Minimal</option>
+                        <option value="prominent">Prominent</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="status-section">
+                <h2>Status</h2>
+                <div class="status-item">
+                    <span class="status-label">Extension:</span>
+                    <span class="status-value" id="extension-status">Active</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">API:</span>
+                    <span class="status-value" id="api-status">Ready</span>
+                </div>
+            </section>
+
+            <section class="actions-section">
+                <button id="save-settings" class="btn btn-primary">Save Settings</button>
+                <button id="test-api" class="btn btn-secondary">Test API</button>
+            </section>
+        </main>
+
+        <footer class="popup-footer">
+            <p>&copy; 2024 Prompt Pilot</p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html> 

@@ -1,0 +1,102 @@
+/* Prompt Pilot Content Styles */
+/* This file contains styles for elements injected into LinkedIn pages */
+
+/* AI Button Styles - will be expanded in Task #4 */
+.prompt-pilot-button {
+    /* Placeholder styles - will be implemented */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background: #0077b5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.prompt-pilot-button:hover {
+    background: #005885;
+    transform: translateY(-1px);
+}
+
+.prompt-pilot-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Loading state */
+.prompt-pilot-button.loading {
+    background: #666;
+    cursor: wait;
+}
+
+.prompt-pilot-button.loading::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 6px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success state */
+.prompt-pilot-button.success {
+    background: #28a745;
+}
+
+/* Error state */
+.prompt-pilot-button.error {
+    background: #dc3545;
+}
+
+/* Button positioning - will be refined based on LinkedIn's layout */
+.prompt-pilot-button-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+/* Minimal style variant */
+.prompt-pilot-button.minimal {
+    background: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+    font-size: 11px;
+    padding: 4px 8px;
+}
+
+.prompt-pilot-button.minimal:hover {
+    background: #f3f2ef;
+    color: #0077b5;
+    border-color: #0077b5;
+}
+
+/* Prominent style variant */
+.prompt-pilot-button.prominent {
+    background: linear-gradient(135deg, #0077b5, #005885);
+    box-shadow: 0 2px 4px rgba(0, 119, 181, 0.3);
+    font-weight: 600;
+}
+
+.prompt-pilot-button.prominent:hover {
+    box-shadow: 0 4px 8px rgba(0, 119, 181, 0.4);
+}
+
+/* Ensure our elements don't interfere with LinkedIn's layout */
+.prompt-pilot-button,
+.prompt-pilot-button-container {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+} 
